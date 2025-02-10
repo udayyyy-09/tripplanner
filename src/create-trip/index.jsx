@@ -1,34 +1,49 @@
 import React, { useState } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-
+import { Input } from "@/components/ui/input";
+import BudgetSelection from "@/constants/BudgetSelection";
+import TravelCompanion from "@/constants/TravelCompanion";
+import Autocomplete from "@/constants/Autocomplete";
+import { Button } from '@/components/ui/button';
+function restrictdays(e){
+    let val = 
+}
 function CreateTrip() {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(0);
 
   return (
     <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 mt-10 text-center">
       <h2 className="font-bold text-3xl text-center">Tell Us Your Travel Preference</h2>
       <p className="mt-3 text-gray-700 text-xl text-center">
-        Just provide some information, and our trip planner will generate a customized itinerary based on your preferences
+        Just provide some information, and our trip planner will generate a customized itinerary based on your preferences.
       </p>
       
-      <div className="mt-20">
+      <div className="mt-20 flex flex-col gap-9">
+        {/* Destination Selection */}
         <div>
-          <h2 className="text-xl my-3 font-medium text-center">What is your destination of choice?</h2>
-          <GooglePlacesAutocomplete
-            apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
-            selectProps={{
-              value,
-              onChange: setValue,
-              placeholder: 'Search for a destination',
-              styles: {
-                control: (provided) => ({
-                  ...provided,
-                  maxWidth: '600px',
-                  margin: '0 auto'
-                })
-              }
-            }}
+          <h2 className="text-xl my-6 font-medium text-center">What is your destination of choice?</h2>
+          <Autocomplete/>
+        </div>
+
+        {/* Number of Days Input */}
+        <div>
+          <h2 className="text-xl my-6 font-medium text-center">How many days is your trip?</h2>
+          <Input 
+            type = "number"
+            placeholder="Ex. 3" 
+            className="w-[600px] mx-auto block "
+            style = {{borderWidth:"2px"}}
+            onChange = {restrictdays}
           />
+        </div>
+
+        {/* Budget Selection */}
+        <BudgetSelection />
+        {/* Travel Companion */}
+        <TravelCompanion/>
+        <div
+        className = "my-4 flex justify-end">
+          <Button>Generate Trip </Button>
         </div>
       </div>
     </div>

@@ -18,8 +18,9 @@ function Hero() {
       <Link to ={'/create-trip'}>
           <Button>Get's Started</Button>
       </Link>
+
     </div>
   );
 }
-
 export default Hero;
+

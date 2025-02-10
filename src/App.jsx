@@ -1,14 +1,4 @@
-// import { Button } from "@/components/ui/button"
-// import './index.css';
-// import './App.css';
-// import {Routes,Route} from 
-// export default function Home() {
-//   return (
-//     <>
-//         ro
-//     </>
-//   )
-// }
+
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import CreateTrip from './create-trip/index';
@@ -25,7 +15,7 @@ function App() {
       {/* Routes */}
       <Routes>
         <Route path="/" element={<Hero />} />
-        <Route path="/create-trip" element={<CreateTrip />} />
+        <Route path = "/create-trip" element = {<CreateTrip/>}/>  
       </Routes>
 
     </div>

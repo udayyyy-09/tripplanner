@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Input } from "@/components/ui/input";
 import BudgetSelection from "@/constants/BudgetSelection";
 import TravelCompanion from "@/constants/TravelCompanion";
 import Autocomplete from "@/constants/Autocomplete";
 import { Button } from '@/components/ui/button';
-function restrictdays(e){
-    let val = 
-}
 function CreateTrip() {
   const [value, setValue] = useState(0);
 
@@ -33,7 +29,6 @@ function CreateTrip() {
             placeholder="Ex. 3" 
             className="w-[600px] mx-auto block "
             style = {{borderWidth:"2px"}}
-            onChange = {restrictdays}
           />
         </div>
 

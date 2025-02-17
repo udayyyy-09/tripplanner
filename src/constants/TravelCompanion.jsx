@@ -17,7 +17,7 @@ function TravelCompanion({ onSelect }) {
 
   return (
     <div className="text-center mt-0">
-      <h2 className="text-xl my-7 font-medium">Who do you plan on traveling with on your next adventure?</h2>
+      <h2 className="text-xl my-7 font-medium">Who do you plan on traveling with on your next adventure?👨‍👨‍👧</h2>
       <div className="flex justify-center gap-7 flex-wrap">
         {travelOptions.map((option) => (
           <button

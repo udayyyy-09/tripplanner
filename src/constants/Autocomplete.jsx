@@ -25,6 +25,7 @@ const MapboxAutocomplete = () => {
         type="text"
         value={query}
         onChange={(e) => handleSearch(e.target.value)}
+        // onChange = {()=>handleInputChange('location',v)}
         placeholder="Search a destination"
         style={{ width: "300px", padding: "8px", fontSize: "16px",background:"white",margion:"0 auto",borderRadius: "calc(var(--radius) - 2px)",borderWidth:"2px",width:"600px"}}
       />

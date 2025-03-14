@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const MapboxAutocomplete = () => {
+const MapboxAutocomplete = ({handleInputChange}) => {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiYXV0aG9yODkwIiwiYSI6ImNtNnh4MWJicTB2ZHkybHF5Z3cweWZ0bzIifQ.YHM191l4N3itemZCxNWuyg";
@@ -17,6 +17,12 @@ const MapboxAutocomplete = () => {
       setSuggestions([]);
     }
   };
+  const handleSelectPlace = (place) => {
+    setQuery(place.place_name);
+    setSuggestions([]);
+    handleInputChange("destination", place.place_name); // Update destination in formData
+  };
+
 
   return (
     <div>
@@ -36,6 +42,7 @@ const MapboxAutocomplete = () => {
             onClick={() => {
               setQuery(place.place_name);
               setSuggestions([]);
+              handleSelectPlace(place)
             }}
             style={{
               cursor: "pointer",

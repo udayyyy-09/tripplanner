@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import CreateTrip from './create-trip/index';
 import Hero from './components/ui/custom/Hero';
-
+import "leaflet/dist/leaflet.css";
 function App() {
   return (
     <div className="min-h-screen bg-white text-black">

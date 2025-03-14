@@ -7,12 +7,13 @@ const travelOptions = [
   { label: "⛵ Friends", value: "friends", description: "A bunch of thrill-seekers" },
 ];
 
-function TravelCompanion({ onSelect }) {
+function TravelCompanion({ handleInputChange,onSelect }) {
   const [selectedOption, setSelectedOption] = useState(null); // Default: Solo traveler
 
   const handleSelection = (value) => {
     setSelectedOption(value);
     if (onSelect) onSelect(value); // Pass the value to the parent if needed
+    handleInputChange("traveler", value);
   };
 
   return (

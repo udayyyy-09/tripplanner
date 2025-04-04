@@ -2,12 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>TripMate</title>
+    <!-- Preloader -->
+
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      window.addEventListener("load", () => {
+          const preloader = document.getElementById("preloader");
+          const landingPage = document.getElementById("landing-page");
+  
+          setTimeout(() => {
+              preloader.style.opacity = "0";  // Fade out effect
+              setTimeout(() => {
+                  preloader.style.display = "none";
+                  landingPage.classList.remove("hidden");  // Show the landing page
+              }, 500);  // Match the transition duration
+          }, 2000);  // Preloader duration (2 seconds)
+      });
+  </script>
+  
   </body>
 </html>

@@ -1,64 +1,55 @@
+import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { motion } from "framer-motion";
 import "leaflet/dist/leaflet.css";
-import { FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 
-const TripPlanner = () => {
+const MapComponents = () => {
+  const [isMapInteracted, setIsMapInteracted] = useState(false);
+
+  // Function to handle map interaction
+  const handleMapInteraction = () => {
+    console.log("Map interacted!"); // Debugging
+    setIsMapInteracted(true);
+  };
+
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Left Side: Trip Details */}
-      <div className="w-1/3 p-6 bg-white shadow-lg rounded-lg overflow-auto">
-        {/* Trip Header */}
-        <div className="flex items-center space-x-3 border-b pb-3">
-          <FaMapMarkerAlt className="text-red-500 text-xl" />
-          <h2 className="text-2xl font-bold">3 Days Trip in Shimla, India 🇮🇳</h2>
-        </div>
+    <div className="relative h-[800px] w-full rounded-lg overflow-hidden shadow-lg">
+      {/* Map Container */}
+      <MapContainer
+        center={[31.1048, 77.1734]}
+        zoom={10}
+        className="h-full w-full"
+        whenCreated={(map) => {
+          console.log("Map instance created:", map); // Debugging
+          // Add event listener for zoom interaction
+          map.on("zoomstart", handleMapInteraction);
+        }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Marker position={[31.1048, 77.1734]}>
+          <Popup>Shimla, Himachal Pradesh, India</Popup>
+        </Marker>
+      </MapContainer>
 
-        {/* Trip Info */}
-        <p className="text-gray-600 mt-4">
-          Explore the scenic beauty of Shimla, enjoy shopping at Mall Road, and experience the toy train ride.
-        </p>
-
-        {/* Itinerary Section */}
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold flex items-center">
-            <FaCalendarAlt className="text-blue-500 mr-2" />
-            Itinerary
-          </h3>
-
-          {/* Day 1 */}
-          <div className="mt-3 p-8 border rounded-lg shadow-md bg-gray-50 hover:bg-blue-200">
-            <h4 className="font-bold text-lg">
-                Day 1: Mall Road📍</h4>
-            <p className="text-gray-700 text-sm">Explore Mall Road for local shopping and food.</p>
-          </div>
-
-          {/* Day 2 */}
-          <div className="mt-3 p-8 border rounded-lg shadow-md bg-gray-50 hover:bg-blue-200">
-            <h4 className="font-bold text-lg p-1">Day 2: Kufri🧸</h4>
-            <p className="text-gray-700 text-sm">Enjoy adventure activities and breathtaking views at Kufri.</p>
-          </div>
-
-          <div className="mt-3 p-8 border rounded-lg shadow-md bg-gray-50 hover:bg-blue-200">
-            <h4 className="font-bold text-lg">Day 3: Christ Church⛪</h4>
-            <p className="text-gray-700 text-sm">This is the heart of Shimla, a wide, pedestrian-friendly promenade offering stunning views of the Shivalik Range and a hub for cultural activities. </p>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Right Side: Map */}
-      <div className="w-2/3 p-8">
-        <div className="h-[600px] w-full rounded-lg overflow-hidden shadow-lg">
-          <MapContainer center={[31.1048, 77.1734]} zoom={10} className="h-full w-full">
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={[31.1048, 77.1734]}>
-              <Popup>Shimla, Himachal Pradesh, India</Popup>
-            </Marker>
-          </MapContainer>
-        </div>
-      </div>
+      {/* Zoom Indicator */}
+      {!isMapInteracted && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-lg shadow-md flex items-center gap-2"
+        >
+          <span className="text-sm text-gray-700">Zoom In/Out</span>
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 1, repeat: Infinity }}
+          >
+            🔍
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 };
 
-export default TripPlanner;
+export default MapComponents;

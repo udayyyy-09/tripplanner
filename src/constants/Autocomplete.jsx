@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const MapboxAutocomplete = ({handleInputChange}) => {
+const MapboxAutocomplete = ({ handleInputChange }) => {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiYXV0aG9yODkwIiwiYSI6ImNtNnh4MWJicTB2ZHkybHF5Z3cweWZ0bzIifQ.YHM191l4N3itemZCxNWuyg";
+  const MAPBOX_ACCESS_TOKEN =
+    "pk.eyJ1IjoiYXV0aG9yODkwIiwiYSI6ImNtNnh4MWJicTB2ZHkybHF5Z3cweWZ0bzIifQ.YHM191l4N3itemZCxNWuyg";
 
   const handleSearch = async (value) => {
     setQuery(value);
@@ -17,12 +19,12 @@ const MapboxAutocomplete = ({handleInputChange}) => {
       setSuggestions([]);
     }
   };
+
   const handleSelectPlace = (place) => {
     setQuery(place.place_name);
     setSuggestions([]);
-    handleInputChange("destination", place.place_name); // Update destination in formData
+    handleInputChange("destination", place.place_name);
   };
-
 
   return (
     <div>
@@ -31,17 +33,14 @@ const MapboxAutocomplete = ({handleInputChange}) => {
         type="text"
         value={query}
         onChange={(e) => handleSearch(e.target.value)}
-        // onChange = {()=>handleInputChange('location',v)}
         placeholder="Search a destination"
-        style={{ width: "300px", padding: "8px", fontSize: "16px",background:"white",margion:"0 auto",borderRadius: "calc(var(--radius) - 2px)",borderWidth:"2px",width:"600px"}}
+        style={{  padding: "8px", fontSize: "16px",background:"white",margion:"0 auto",borderRadius: "calc(var(--radius) - 2px)",borderWidth:"2px",width:"600px"}}
       />
       <ul style={{ listStyleType: "none", padding: 0 }}>
         {suggestions.map((place) => (
           <li
             key={place.id}
             onClick={() => {
-              setQuery(place.place_name);
-              setSuggestions([]);
               handleSelectPlace(place)
             }}
             style={{
@@ -55,8 +54,8 @@ const MapboxAutocomplete = ({handleInputChange}) => {
           </li>
         ))}
       </ul>
-    </div>
-  );
+    </div>
+  );
 };
 
 export default MapboxAutocomplete;

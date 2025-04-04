@@ -7,8 +7,9 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const apiKey = import.meta.env.VITE_GOOGLE_GEMINI_AI_API_KEY;
 const firebaseConfig = {
-  apiKey: "AIzaSyBVWd5RM6s6disbVEFeJJK8pBbUB_eqQ0k",
+  apiKey,
   authDomain: "ai-planner-79517.firebaseapp.com",
   projectId: "ai-planner-79517",
   storageBucket: "ai-planner-79517.firebasestorage.app",

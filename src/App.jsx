@@ -5,6 +5,7 @@ import Hero from './components/ui/custom/Hero';
 import "leaflet/dist/leaflet.css";
 import './App.css';  // Import CSS for styling
 import Viewtrip from './view-trip/[tripId]/index';
+import DestinationDetail from './constants/DestinationDetails';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -35,6 +36,7 @@ function App() {
             <Route path="/" element={<Hero />} />
             <Route path="/create-trip" element={<CreateTrip />} />
             <Route path = "/view-trip/:tripId" element = {<Viewtrip/>}/>
+            <Route path = "/destination/:id" element = {<DestinationDetail/>}></Route>
           </Routes>
         </>
       )}

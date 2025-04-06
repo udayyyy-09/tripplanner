@@ -26,7 +26,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "@/service/firebaseconfig";
+import { db } from "@/service/firebaseConfig";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 

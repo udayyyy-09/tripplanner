@@ -77,9 +77,18 @@ function Header() {
       <div>
         {user ? (
           <div className="items-center flex gap-3 bg-white">
-            <Button variant="outline" className="rounded-full">
+
+            <Link to = {'/create-trip'}>
+            <Button variant="outline" className="rounded-full text-black ">
+              Create Trip
+            </Button>
+            </Link>
+
+            <Link to = {'/my-trips'}>
+            <Button variant="outline" className="rounded-full text-black ">
               My Trips
             </Button>
+            </Link>
             <Popover>
               <PopoverTrigger>
                 <img

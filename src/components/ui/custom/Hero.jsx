@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
 import "leaflet/dist/leaflet.css";
 import MapComponents from "../Frontend";
 import Footer from './../../../view-trip/[tripId]/components/Footer';
+import Temp from './../Temp';
 function Hero() {
   const navigate = useNavigate();
 
@@ -13,25 +14,25 @@ function Hero() {
     {
       id: "tokyo",
       title: "Tokyo Dreams",
-      description: "5-day immersive journey through Tokyo's neon-lit streets, ancient temples, and culinary wonders",
+      description: "3-day immersive journey through Tokyo's neon-lit streets, ancient temples, and culinary wonders",
       image: "/tokyo.jpg"
     },
     {
       id: "dubai",
       title: "Dubai Wonders",
-      description: "Luxurious 5-day adventure exploring futuristic skyscrapers, golden deserts, and vibrant markets",
+      description: "Luxurious 3-day adventure exploring futuristic skyscrapers, golden deserts, and vibrant markets",
       image: "/Dubai.webp"
     },
     {
       id: "shimla",
       title: "Shimla Serenity",
-      description: "5-day Himalayan retreat through colonial charm, mountain vistas, and peaceful nature walks",
+      description: "3-day Himalayan retreat through colonial charm, mountain vistas, and peaceful nature walks",
       image: "/Shimla.jpg"
     },
     {
       id: "rome",
       title: "Roman Odyssey",
-      description: "5-day historical exploration of ancient ruins, Renaissance art, and authentic Italian flavors",
+      description: "3-day historical exploration of ancient ruins, Renaissance art, and authentic Italian flavors",
       image: "/rome.jpg"
     }
   ];
@@ -164,6 +165,8 @@ function Hero() {
       >
         Everything You Need for Planning Your Trip ✈️
       </motion.h2>
+
+
       
       <motion.div
         
@@ -171,7 +174,7 @@ function Hero() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="mt-16 w-full max-w-4xl bg-white rounded-xl shadow-lg p-8 sm:p-10 relative overflow-hidden"
+        className="mt-8 w-full max-w-4xl bg-white rounded-xl shadow-lg p-8 sm:p-10 relative overflow-hidden"
       >
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#f56551]/10 rounded-full"></div>
         <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#f56551]/10 rounded-full"></div>
@@ -211,7 +214,22 @@ function Hero() {
         className="w-full mt-10 shadow-lg rounded-xl overflow-hidden border"
       >
         <MapComponents />
+
+
+       
+
       </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+        viewport={{ once: true }}
+        className = "mt-3"
+      >
+        <Temp />
+      </motion.div>
+
         <div className = "mb-5">
           <Footer/>
           

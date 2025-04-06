@@ -63,7 +63,7 @@ function PlaceCardItem({ place }) {
       style={{ textDecoration: "none", backgroundColor: "transparent" }}
     >
       <div className="p-3 mt-2 flex gap-5 hover:scale-105 transition-all cursor-pointer rounded-xl bg-white shadow-sm hover:shadow-md">
-        <div className="relative w-[120px] h-[100px] flex-shrink-0 rounded-xl overflow-hidden">
+        <div className="relative w-[150px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden">
           {isLoading ? (
             <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse"></div>
           ) : (

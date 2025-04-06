@@ -223,7 +223,6 @@ function CreateTrip() {
   };
 
   return (
-    
     <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 mt-10 text-center">
       {/* Motion Effect for Heading */}
       <motion.h2

@@ -105,7 +105,7 @@ const DestinationDetail = () => {
   return (
     <div className="min-h-screen">
       {/* Video Header */}
-      <div className="relative h-screen max-h-[60vh] overflow-hidden">
+      <div className="relative h-screen max-h-[70vh] overflow-hidden">
         <video 
           autoPlay 
           loop 
@@ -116,19 +116,35 @@ const DestinationDetail = () => {
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-medium text-white text-center "
-          >
-            {destination.title}
-          </motion.h1>
-        </div>
+        <motion.h1
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1] // Custom easing for smooth bounce
+    }
+  }}
+  transition={{ duration: 1.2 }}
+  className={`
+    text-5xl md:text-7xl lg:text-8xl 
+    font-bold text-white text-center
+    tracking-tight
+    drop-shadow-[0_5px_15px_rgba(0,0,0,0.7)]
+    text-stroke-2 text-stroke-black/50
+    px-4 pb-2
+    bg-gradient-to-b from-white/90 to-white/70
+    bg-clip-text text-transparent
+    mix-blend-overlay
+  `}
+>
+  {destination.title}
+</motion.h1>        </div>
       </div>
 
       {/* Places to Visit Section */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-12 text-center">
           Must-Visit Places in {destination.title}
         </h2>
@@ -160,7 +176,7 @@ const DestinationDetail = () => {
 
         {/* Itinerary Section */}
         <div className="mt-16 bg-gray-50 rounded-xl p-8">
-          <h3 className="text-2xl font-bold mb-6">Suggested 5-Day Itinerary</h3>
+          <h3 className="text-2xl font-bold mb-6">Suggested 3-Day Itinerary</h3>
           <div className="space-y-4">
             {destination.places.map((place, day) => (
               <div key={day} className="flex items-start gap-4 p-4 bg-white rounded-lg">

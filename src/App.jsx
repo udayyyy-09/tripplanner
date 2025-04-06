@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import './App.css';  // Import CSS for styling
 import Viewtrip from './view-trip/[tripId]/index';
 import DestinationDetail from './constants/DestinationDetails';
+import MyTrips from './my-trips/index';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -37,6 +38,7 @@ function App() {
             <Route path="/create-trip" element={<CreateTrip />} />
             <Route path = "/view-trip/:tripId" element = {<Viewtrip/>}/>
             <Route path = "/destination/:id" element = {<DestinationDetail/>}></Route>
+            <Route path = "/my-trips" element = {<MyTrips/>}></Route>
           </Routes>
         </>
       )}

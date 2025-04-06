@@ -67,6 +67,7 @@ function Header() {
 
   return (
     <div className="p-3 shadow-sm flex justify-between items-center px-5">
+
       <Link to="/">
         <img
           src="/logo.svg"
@@ -74,6 +75,7 @@ function Header() {
           className="w-16 h-auto object-contain"
         />
       </Link>
+
       <div>
         {user ? (
           <div className="items-center flex gap-3 bg-white">

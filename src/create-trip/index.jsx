@@ -30,6 +30,7 @@ import { db } from "@/service/firebaseconfig";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 
+
 function CreateTrip() {
   const [formData, setFormData] = useState({});
   const [showAlert, setShowAlert] = useState(false);

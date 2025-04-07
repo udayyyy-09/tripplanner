@@ -115,7 +115,7 @@ Support & Contact 📧
 
 For questions or feedback:
 
-📩 Email: udaychaudhary419@example.com
+📩 Email: udaychaudhary419@gmail.com
 
 🐛 Report an Issue
 

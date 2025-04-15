@@ -75,6 +75,7 @@ function Header() {
           className="w-16 h-auto object-contain"
         />
       </Link>
+      
 
       <div>
         {user ? (
@@ -106,10 +107,11 @@ function Header() {
                   window.location.reload();
                 }} className = "cursor-pointer">Logout</h2>
               </PopoverContent>
-            </Popover>
+            </Popover>  
           </div>
         ) : (
           <Button onClick = {()=>setOpenDialog(true)}>Sign In</Button>
+          
         )}
       </div>
       <Dialog open={openDialog}>

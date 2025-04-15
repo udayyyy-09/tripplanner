@@ -9,18 +9,18 @@ function Hotels({ trip }) {
   useEffect(() => {
     const fetchImages = async () => {
       const newImages = {};
-      const hotels = trip?.tripData?.hotelOptions || [];
+      const hotels = trip?.tripData?.hotels || [];
       
       await Promise.all(
         hotels.map(async (hotel) => {
           try {
             const imageUrl = await GetHotelImageFromUnsplash(
-              `${hotel.hotelName} ${hotel.hotelAddress.split(',')[0]}` // Add city for better results
+              `${hotel.name} ${hotel.address.split(',')[0]}` // Add city for better results
             );
-            newImages[hotel.hotelName] = imageUrl;
+            newImages[hotel.name] = imageUrl;
           } catch (error) {
-            console.error(`Error loading image for ${hotel.hotelName}:`, error);
-            newImages[hotel.hotelName] = null;
+            console.error(`Error loading image for ${hotel.name}:`, error);
+            newImages[hotel.name] = null;
           }
         })
       );
@@ -35,14 +35,14 @@ function Hotels({ trip }) {
     <div>
       <h1 className="text-2xl font-bold mb-4 text-gray-800 mt-5">Hotel Recommendation</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-7">
-        {trip?.tripData?.hotelOptions?.map((hotel, index) => {
-          const imageUrl = hotelImages[hotel.hotelName] || '/hotel-placeholder.jpg';
+        {trip?.tripData?.hotels?.map((hotel, index) => {
+          const imageUrl = hotelImages[hotel.name] || '/hotel-placeholder.jpg';
           
           return (
             <Link 
-              key={`${hotel.hotelName}-${index}`}
+              key={`${hotel.name}-${index}`}
               to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                `${hotel.hotelName} ${hotel.hotelAddress}`
+                `${hotel.name} ${hotel.address}`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -53,7 +53,7 @@ function Hotels({ trip }) {
                 <div className="relative pb-[75%] rounded-xl overflow-hidden bg-gray-100">
                   <img 
                     src={imageUrl}
-                    alt={`${hotel.hotelName} exterior`}
+                    alt={`${hotel.name} exterior`}
                     className="absolute inset-0 w-full h-full object-cover"
                     onError={(e) => {
                       e.target.src = '/hotel-placeholder.jpg';
@@ -64,8 +64,8 @@ function Hotels({ trip }) {
                 
                 {/* Hotel Info */}
                 <div className="mt-3 space-y-1">
-                  <h2 className="font-medium line-clamp-1">{hotel.hotelName}</h2>
-                  <p className="text-xs text-gray-500 line-clamp-1">📍{hotel.hotelAddress}</p>
+                  <h2 className="font-medium line-clamp-1">{hotel.name}</h2>
+                  <p className="text-xs text-gray-500 line-clamp-1">📍{hotel.address}</p>
                   <div className="flex justify-between text-sm">
                     <span>💰{hotel.price} per night</span>
                     <span>⭐{hotel.rating}</span>

@@ -82,10 +82,12 @@ function PlaceCardItem({ place }) {
         
         <div className="flex-grow">
           <h2 className="font-bold text-lg line-clamp-1">{place.placeName}</h2>
-          <p className="text-sm text-gray-600 line-clamp-2">{place.placeDetails}</p>
-          <h2 className="mt-2 font-medium flex items-center gap-1">
-            <span>🕰️</span> {place.timeTravel}
+          <p className="text-sm text-gray-600 line-clamp-2">{place.details}</p>
+          <h2 className="font-medium text-sm  line-clamp-2 mt-2">
+            <span className = "font -bold text-gray-600 line-clamp-2">Time to visit: </span> {place.bestTimeToVisit}
           </h2>
+          <h2 className="font-medium text-sm mt-2 line-clamp-2"><span className = "font-medium text-gray-600">Ticket Pricing:</span> {place.ticketPrice
+          }</h2>
         </div>
       </div>
     </Link>

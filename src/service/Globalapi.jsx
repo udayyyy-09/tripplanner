@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const UNSPLASH_ACCESS_KEY = "wkyg0P1xmCIn7kt32__KSFADk-Hn_fgWheqZVKNTSAI"; // Your Unsplash API Key
+const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY // Your Unsplash API Key
 
 // Destination Image
 export const GetDestinationPhoto = async (destination) => {

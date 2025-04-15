@@ -1,1 +1,58 @@
-export const AIPrompt = 'Generate Travel Plan for Location : {location}, for {totalDays} Days for {traveler} with a {budget} budget, give me Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, Time travel each of the location for {totalDays} days with each day plan with best time to visit in JSON format. '
+export const AIPrompt =  `Generate a comprehensive travel plan for {location} covering {totalDays} days for {traveler} with a {budget} budget. Provide all data in strict JSON format with the following structure:
+
+{
+  "hotels": [{
+    "name": "string",
+    "address": "string",
+    "price": "string",
+    "imageUrl": "string",
+    "location": {"latitude": number, "longitude": number},
+    "rating": number,
+    "description": "string"
+  }],
+  "dailyItinerary": [{
+    "dayNumber": number,
+    "weather": {
+      "condition": "Sunny/Rainy/Cloudy/etc",
+      "highTemp": number,
+      "lowTemp": number,
+      "recommendation": "string"
+    },
+    "placesToVisit": [{
+      "placeName": "string",
+      "details": "string",
+      "imageUrl": "string",
+      "coordinates": {"latitude": number, "longitude": number},
+      "ticketPrice": "string",
+      "timeSlot": "string",
+      "bestTimeToVisit": "string"
+    }],
+    "placesToEat": [{
+      "name": "string",
+      "cuisine": "string",
+      "priceRange": "string",
+      "imageUrl": "string",
+      "location": {"latitude": number, "longitude": number},
+      "rating": number,
+      "suggestedTime": "string",
+      "specialty": "string"
+    }]
+  }]
+}
+
+Important Requirements:
+1. MUST include daily weather forecasts for each day
+2. MUST include at least 2 restaurant recommendations per day
+3. All image URLs must be actual working URLs
+4. Geo coordinates must be precise for all locations
+5. Time slots should account for local opening hours and traffic
+6. Budget considerations should be reflected in all recommendations
+7. Include practical travel tips based on weather conditions
+8. Restaurant suggestions should match nearby attractions' locations`;
+
+// // Usage example:
+// const FINAL_PROMPT = AIPrompt
+//   .replace('{location}', 'Los Angeles')
+//   .replace('{totalDays}', '5')
+//   .replace('{traveler}', 'family with children')
+//   .replace('{budget}', 'medium');

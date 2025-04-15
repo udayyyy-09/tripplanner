@@ -16,20 +16,25 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { AIPrompt } from "./../constants/option";
-import { chatSession } from "./../service/AIModal";
+import { newchatSession } from "./../service/NewAIModal";
 import {
   Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
   DialogContent,
-  DialogDescription,
   DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/service/FirebaseConfig";
 import { AiOutlineLoading } from "react-icons/ai";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 function CreateTrip() {
   const [formData, setFormData] = useState({});
@@ -38,7 +43,8 @@ function CreateTrip() {
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const [showDisclaimer, setShowDisclaimer] = useState(false);  
+  const [currentTripId,setCurrentTripId] = useState(null);
   const handleInputChange = (name, value) => {
     setFormData({
       ...formData,
@@ -65,70 +71,75 @@ function CreateTrip() {
 
   const onGenerateTrip = async () => {
     const user = localStorage.getItem("user");
-  
+
     if (!user) {
       setOpenDialog(true);
       return;
     }
     const missingFields = [];
-  if (!formData.destination) {
-    missingFields.push("destination");
-  }
+    if (!formData.destination) {
+      missingFields.push("destination");
+    }
 
-  if (!formData.days || formData.days <= 0 || formData.days > 5) {
-    if (!formData.days) {
-      missingFields.push("days");
-    } else {
-      setShowAlert(true);
+    if (!formData.days || formData.days <= 0 || formData.days > 5) {
+      if (!formData.days) {
+        missingFields.push("days");
+      } else {
+        setShowAlert(true);
+        return;
+      }
+    }
+
+    if (!formData.traveler) {
+      missingFields.push("Travel");
+    }
+
+    if (!formData.budget) {
+      missingFields.push("budget");
+    }
+
+    if (missingFields.length > 0) {
+      toast({
+        variant: "destructive",
+        title: "Missing information",
+        description: `Please fill in the following required fields: ${missingFields.join(
+          ", "
+        )}.`,
+      });
       return;
     }
-  }
-
-  if (!formData.traveler) {
-    missingFields.push("Travel");
-  }
-
-  if (!formData.budget) {
-    missingFields.push("budget");
-  }
-
-  if (missingFields.length > 0) {
-    toast({
-      variant: "destructive",
-      title: "Missing information",
-      description: `Please fill in the following required fields: ${missingFields.join(", ")}.`,
-    });
-    return;
-  }
     // ✅ Show the loading spinner
     setLoading(true);
-  
+
     try {
       console.log("Generating trip with data:", formData);
-  
+
       // 🔥 Construct the FINAL PROMPT
       const FINAL_PROMPT = AIPrompt.replace("{location}", formData?.destination)
         .replace("{totalDays}", formData?.days)
         .replace("{traveler}", formData?.traveler)
         .replace("{budget}", formData?.budget);
-  
+
       console.log("Final Prompt:", FINAL_PROMPT);
-  
+
       // 🛠️ Call the AI chat session and wait for the response
-      const result = await chatSession.sendMessage(FINAL_PROMPT);
-  
+      const result = await newchatSession.sendMessage(FINAL_PROMPT);
+
       const tripData = result?.response?.text?.();
-  
+
       if (tripData) {
         console.log("Trip Generated:", tripData);
-  
+
         // Save the generated trip to Firebase
-        await SaveAiTrip(tripData);
-  
+        // await SaveAiTrip(tripData);
+        const docId = await SaveAiTrip(tripData);
+        setCurrentTripId(docId);
         toast({
           title: "Trip successfully generated 🎉",
           description: "Your personalized trip plan is ready!",
         });
+        setShowDisclaimer(true);
+        
       } else {
         toast({
           title: "Failed to generate trip",
@@ -147,24 +158,23 @@ function CreateTrip() {
       setLoading(false);
     }
   };
-  
-  
+
   const SaveAiTrip = async (tripData) => {
     if (!tripData) {
       console.error("No trip data to save");
       return;
     }
-    
+
     setLoading(true);
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (!user) {
         throw new Error("No authenticated user found");
       }
-      
+
       // Generate a unique ID for the trip (don't use the entire user object)
       const docId = Date.now().toString(); // Simple timestamp-based ID
-      
+
       await setDoc(doc(db, "AiTrips", docId), {
         userSelection: formData,
         tripData: JSON.parse(tripData),
@@ -172,17 +182,16 @@ function CreateTrip() {
         userId: user?.sub, // Use Google's user ID
         id: docId,
       });
-      
+
       console.log("Trip saved to Firebase!");
-      
       // Navigate to the view trip page with the document ID
-      navigate(`/view-trip/${docId}`);
-      
+      // navigate(`/view-trip/${docId}`);
+      return docId;
     } catch (error) {
       console.error("Detailed Firebase Error:", {
         message: error.message,
         code: error.code,
-        stack: error.stack
+        stack: error.stack,
       });
     } finally {
       setLoading(false);
@@ -199,26 +208,26 @@ function CreateTrip() {
           },
         }
       );
-  
+
       if (!response.ok) {
         throw new Error("Failed to fetch user profile");
       }
-  
+
       const data = await response.json();
       console.log("FULL User Profile Data:", {
         email: data.email,
         name: data.name,
         sub: data.sub, // Google's unique user ID
-        tokenInfo: tokenInfo
+        tokenInfo: tokenInfo,
       });
-  
+
       localStorage.setItem("user", JSON.stringify(data));
       setOpenDialog(false);
       onGenerateTrip();
     } catch (err) {
       console.error("Detailed Error fetching user profile:", {
         error: err,
-        tokenInfo: tokenInfo
+        tokenInfo: tokenInfo,
       });
     }
   };
@@ -305,6 +314,61 @@ function CreateTrip() {
           </Button>
         </div>
 
+        {/* Disclaimer Dialog */}
+        // Replace your current Dialog component with this updated version
+<Dialog 
+  open={showDisclaimer} 
+  onOpenChange={(open) => {
+    if (!open) {
+      // Only handle the closing case
+      setShowDisclaimer(false);
+      if (currentTripId) {
+        // Use setTimeout to ensure state updates complete before navigation
+        setTimeout(() => {
+          navigate(`/view-trip/${currentTripId}`);
+        }, 0);
+      }
+    } else {
+      setShowDisclaimer(open);
+    }
+  }}
+>
+  <DialogContent className="max-w-md">
+    <DialogHeader>
+      <DialogTitle className="text-lg font-semibold">
+        Important Notice
+      </DialogTitle>
+    </DialogHeader>
+    <div className="text-sm text-gray-700">
+      <p className="mb-4">
+        Costs and other details mentioned are subject to variations;
+        therefore, rechecking the information with the relevant sources
+        is advisable.
+      </p>
+      <p className="font-medium">Additional considerations:</p>
+      <ul className="list-disc pl-5 mt-2 space-y-1">
+        <li>Prices may vary by season</li>
+        <li>Verify attraction hours before visiting</li>
+        <li>Check local COVID-19 guidelines if applicable</li>
+      </ul>
+    </div>
+    <div className="mt-4 flex justify-end">
+      <Button
+        onClick={() => {
+          setShowDisclaimer(false);
+          if (currentTripId) {
+            setTimeout(() => {
+              navigate(`/view-trip/${currentTripId}`);
+            }, 0);
+          }
+        }}
+        className="bg-blue-600 hover:bg-blue-700"
+      >
+        I Understand
+      </Button>
+    </div>
+  </DialogContent>
+</Dialog>
         <Dialog open={openDialog}>
           <DialogContent>
             <DialogHeader>

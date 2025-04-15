@@ -12,12 +12,13 @@ import {
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import PlacesToEat from './PlacesToEat';
 import Weather from './Weather'; // Import the Weather component
+import { useToast } from "@/hooks/use-toast";
 
 function PlacesToVisit({ trip }) {
   const [showRatingDialog, setShowRatingDialog] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-
+  const { toast } = useToast();
   return (
     <div>
       <h2 className="font-bold text-lg mt-10">Trip Itinerary</h2>
@@ -77,19 +78,70 @@ function PlacesToVisit({ trip }) {
         )}
       </div>
 
-      {/* Rating Prompt Button and Dialog (keep existing code) */}
-      <div className="mt-8 text-center">
+      {/* Rating Prompt Button */}
+      <div className="mt-8 text-center ">
         <button 
           onClick={() => setShowRatingDialog(true)}
-          className="px-4 py-2 bg-blue-900 text-white hover:bg-blue-600"
+          className="px-4 py-2 bg-blue-900 text-white hover:bg-blue-600 "
         >
           Rate Your Experience
         </button>
       </div>
 
+      {/* Rating Dialog - Maintains your original styling */}
       <AlertDialog open={showRatingDialog} onOpenChange={setShowRatingDialog}>
-        {/* ... existing dialog code ... */}
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Rate Your Experience</AlertDialogTitle>
+            <AlertDialogDescription>
+              How would you rate this trip plan?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          
+          <div className="flex justify-center my-4 gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                onMouseEnter={() => setHoverRating(star)}
+                onMouseLeave={() => setHoverRating(0)}
+                onClick={() => setRating(star)}
+                className="text-xl focus:outline-none"
+              >
+                {star <= (hoverRating || rating) ? (
+                  <FaStar className="text-white" />
+                ) : (
+                  <FaRegStar className="text-white" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel 
+              onClick={() => setShowRatingDialog(false)}
+              className="px-4 py-2"
+            >
+              Maybe Later
+            </AlertDialogCancel>
+            <button
+              onClick={() => {
+                toast({
+                  title: "Thanks for your feedback🎉",
+                  description: "Your rating have submitted successfully",
+                });
+                setShowRatingDialog(false);
+              }}
+              className={`px-4 py-2 bg-blue-500 text-white rounded ${
+                rating === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+              }`}
+              disabled={rating === 0}
+            >
+              Submit Rating
+            </button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
       </AlertDialog>
+
     </div>
   );
 }

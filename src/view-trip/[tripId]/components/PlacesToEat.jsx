@@ -26,7 +26,7 @@ function PlacesToEat({ places, currentCity ,restro}) {
         } catch (error) {
           console.error('Error fetching image for', place.name, error);
           // Fallback to placeholder if available
-          images[place.name] = place.imageUrl || 'https://via.placeholder.com/400x300?text=Restaurant';
+          images[place.name] = place.imageUrl 
         }
       }));
       
@@ -51,8 +51,7 @@ function PlacesToEat({ places, currentCity ,restro}) {
         {places.map((place, index) => {
           const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name}, ${currentCity}`)}`;
           const imageUrl = restaurantImages[place.name] || 
-                          place.imageUrl || 
-                          'https://via.placeholder.com/400x300?text=Restaurant';
+                          place.imageUrl 
 
           return (
             <div 
@@ -67,7 +66,7 @@ function PlacesToEat({ places, currentCity ,restro}) {
                   className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/400x300?text=Restaurant';
+                    // e.target.src = 'https://via.placeholder.com/400x300?text=Restaurant';
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent p-4 flex flex-col justify-end">

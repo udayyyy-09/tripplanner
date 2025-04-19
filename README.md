@@ -16,6 +16,10 @@ Features 🌟
 
 ✅ Google OAuth – Easy sign-in with Google.
 
+✅ DownLoad PDF – You can get your trip itinerary in pdf format also.
+
+✅ ChatBOT – Integrate AI Chatbox to helps the user to get trips plans.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Tech Stack 🛠️

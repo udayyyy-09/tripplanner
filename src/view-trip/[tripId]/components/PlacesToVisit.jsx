@@ -195,7 +195,7 @@ function PlacesToVisit({ trip }) {
               }`}
               disabled={rating === 0 || isSubmitting}
             >
-              {isSubmitting ? 'Sending...' : 'Submit & Get PDF'}
+              {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
           </AlertDialogFooter>
         </AlertDialogContent>

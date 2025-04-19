@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import MapComponents from "../Frontend";
 import Footer from './../../../view-trip/[tripId]/components/Footer';
 import Temp from './../Temp';
+import FloatingChat from './../FloatingChat';
 function Hero() {
   const navigate = useNavigate();
 
@@ -234,6 +235,8 @@ function Hero() {
           <Footer/>
           
         </div>
+
+        <FloatingChat/>
            
     </motion.div>
 

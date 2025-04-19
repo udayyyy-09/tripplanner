@@ -10,6 +10,7 @@ export const GetDestinationPhoto = async (destination) => {
     const response = await axios.get(url);
     return response.data.results[0]?.urls?.regular || null;
   } catch (error) {
+    console.log("UNSPLASH_ACCESS_KEY:", UNSPLASH_ACCESS_KEY);
     console.error("Unsplash API Error (Destination):", error?.response?.data || error.message);
     return null;
   }

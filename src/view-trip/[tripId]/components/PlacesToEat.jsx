@@ -42,12 +42,11 @@ function PlacesToEat({ places, currentCity ,restro}) {
 
   return (
     <div className="mt-8">
-      <h3 className="text-xl font-semibold flex items-center gap-2 mb-4">
-        <span className="text-amber-600">🍽️</span>
+      <h3 className="text-xl font-semibold flex items-center gap-5 mb-4">
         Recommended Places to Eat in {currentCity}
       </h3>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {places.map((place, index) => {
           const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name}, ${currentCity}`)}`;
           const imageUrl = restaurantImages[place.name] || 

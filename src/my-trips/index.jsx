@@ -3,6 +3,7 @@ import React,{ useEffect, useState } from 'react';
 import {collection,getDocs,query,where} from 'firebase/firestore';
 import { db } from '@/service/FirebaseConfig';
 import UserTripCardItem from './components/UserTripCardItem';
+import FloatingChat from './../components/ui/FloatingChat';
 function MyTrips() {
   const navigate = useNavigate();
   const [userTrips, setUserTrips] = useState([]);
@@ -38,6 +39,8 @@ function MyTrips() {
             <UserTripCardItem trip = {trip} />
           ))}
         </div>
+
+        <FloatingChat/>
     </div>
   )
 }

@@ -54,23 +54,17 @@ function Information({ trip }) {
     doc.text('Daily Itinerary', 15, yPos);
     yPos += 10;
   
-    // Get itinerary data - now handling object structure with day1, day2, etc.
-    const itinerary = trip?.tripData?.itinerary || {};
+    // Get itinerary data - now using the new array structure
+    const dailyItinerary = trip?.tripData?.dailyItinerary || [];
     
-    // Convert object to array of days
-    const days = Object.keys(itinerary)
-      .filter(key => key.startsWith('day'))
-      .map(key => ({
-        dayNumber: parseInt(key.replace('day', '')),
-        ...itinerary[key]
-      }))
-      .sort((a, b) => a.dayNumber - b.dayNumber);
-  
-    if (days.length === 0) {
+    if (!dailyItinerary.length) {
       doc.setFontSize(12);
       doc.text('No itinerary data available', 20, yPos);
     } else {
-      days.forEach((day, dayIndex) => {
+      // Sort the itinerary by day number
+      const sortedItinerary = [...dailyItinerary].sort((a, b) => a.dayNumber - b.dayNumber);
+      
+      sortedItinerary.forEach((day, dayIndex) => {
         // Check if we need a new page
         if (dayIndex > 0 && yPos > 250) {
           doc.addPage();
@@ -79,32 +73,47 @@ function Information({ trip }) {
   
         // Day Header
         doc.setFontSize(14);
-  const dayLabel = `Day ${day.dayNumber}`;
-  const dayTitle = day.dayTitle ? `: ${day.dayTitle}` : '';
-  doc.text(`${dayLabel}${dayTitle}`, 15, yPos);
-  yPos += 8;
-  
-        // Get activities - ensure it's always an array
-        const activities = Array.isArray(day.activities) ? day.activities : [];
-  
-        if (activities.length === 0) {
+        doc.text(`Day ${day.dayNumber}`, 15, yPos);
+        yPos += 8;
+        
+        // Add weather information
+        if (day.weather && day.weather.condition) {
           doc.setFontSize(12);
-          doc.text('No activities planned', 20, yPos);
+          doc.text(`Weather: ${day.weather.condition}, High: ${day.weather.highTemp}°, Low: ${day.weather.lowTemp}°`, 20, yPos);
           yPos += 10;
-        } else {
-          // Create table data
-          const activitiesData = activities.map((item) => {
-            return [
-              item.timeTravel || 'Anytime',
-              item.placeName || item.name || 'Activity',
-              item.rating || 'Rating'
-            ];
-          });
+        }
   
+        // Places to Visit
+        if (day.placesToVisit && day.placesToVisit.length) {
           autoTable(doc, {
             startY: yPos,
-            head: [['Time', 'Activity', 'Rating']],
-            body: activitiesData,
+            head: [['Time', 'Place to Visit', 'Details']],
+            body: day.placesToVisit.map(place => [
+              place.timeSlot || 'Anytime',
+              place.placeName || 'Place Name',
+              place.details || 'No details available'
+            ]),
+            styles: { cellPadding: 4, fontSize: 10 },
+            headStyles: { fillColor: [61, 121, 52], textColor: [255, 255, 255] },
+            alternateRowStyles: { fillColor: [240, 240, 240] }
+          });
+          yPos = doc.lastAutoTable.finalY + 10;
+        } else {
+          doc.setFontSize(12);
+          doc.text('No places to visit planned', 20, yPos);
+          yPos += 10;
+        }
+        
+        // Places to Eat
+        if (day.placesToEat && day.placesToEat.length) {
+          autoTable(doc, {
+            startY: yPos,
+            head: [['Time', 'Restaurant', 'Cuisine']],
+            body: day.placesToEat.map(place => [
+              place.suggestedTime || 'Anytime',
+              place.name || 'Restaurant Name',
+              place.cuisine || 'Various'
+            ]),
             styles: { cellPadding: 4, fontSize: 10 },
             headStyles: { fillColor: [61, 121, 52], textColor: [255, 255, 255] },
             alternateRowStyles: { fillColor: [240, 240, 240] }

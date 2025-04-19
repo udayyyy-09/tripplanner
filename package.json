@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@google/generative-ai": "^0.24.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",

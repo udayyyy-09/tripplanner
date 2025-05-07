@@ -40,7 +40,7 @@ function MyTrips() {
           ))}
         </div>
 
-        <FloatingChat/>
+         <FloatingChat/> 
     </div>
   )
 }

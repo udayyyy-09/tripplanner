@@ -53,12 +53,9 @@ function PlacesToVisit({ trip }) {
         trip_date: new Date().toLocaleDateString(),
         email: trip.userEmail,
         star_string: generateStarString(rating), // ⭐⭐⭐⭐☆,
-        feedback_url: 'https://triplanner-one.vercel.app'
+        feedback_url: 'https://tripmate-olive.vercel.app/'
       };
 
-
-      
-      
       
       // Send email with EmailJS
       await emailjs.send(

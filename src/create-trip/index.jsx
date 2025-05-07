@@ -35,6 +35,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/service/FirebaseConfig";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import Footer from './../view-trip/[tripId]/components/Footer';
 
 function CreateTrip() {
   const [formData, setFormData] = useState({});
@@ -315,7 +316,7 @@ function CreateTrip() {
         </div>
 
         {/* Disclaimer Dialog */}
-        // Replace your current Dialog component with this updated version
+        <Footer/>
 <Dialog 
   open={showDisclaimer} 
   onOpenChange={(open) => {

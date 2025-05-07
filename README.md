@@ -1,28 +1,33 @@
-TripMate - AI Travel Partner ✈️🤖
+# TripMate - AI Travel Partner ✈️🤖
 
 TripMate is an intelligent travel planning assistant that generates personalized itineraries using AI. It helps users plan trips effortlessly by suggesting destinations, activities, and budgets based on their preferences.
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Features 🌟
+## Features 🌟
 
-✅ AI-Powered Itinerary Generation – Get custom travel plans instantly.
+✅ AI-Powered Itinerary Generation – Instantly generate personalized travel plans based on user preferences using AI.
 
-✅ Budget & Companion Selection – Tailor trips to your spending and group size.
+✅ Download PDF – Users can download their entire trip itinerary in a clean, printable PDF format.
 
-✅ Firebase Integration – Securely save and manage trips.
+✅ AI Chatbot Support – An integrated AI chatbot assists users in getting quick travel suggestions and answers.
 
-✅ Interactive UI – Smooth animations with Framer Motion.
+✅ Dynamic Budget-Based Planning – Plans are tailored based on the user's selected budget, with real-time currency adjustments.
 
-✅ Google OAuth – Easy sign-in with Google.
+✅ Gmail-Based Ratings – Users receive itineraries and can provide feedback or ratings directly through their Gmail.
 
-✅ DownLoad PDF – You can get your trip itinerary in pdf format also.
+✅ Comprehensive Itinerary – Each itinerary includes:
 
-✅ ChatBOT – Integrate AI Chatbox to helps the user to get trips plans.
+   🗺️ Places to Visit
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   🍴 Places to Eat
 
-Tech Stack 🛠️
+   🌤️ Live Weather Info
+
+ ✅ Responsive Dashboard – Centralized dashboard for users to manage, view, and modify trips easily.
+
+## 
+
+## Tech Stack 🛠️
 
 Frontend: React.js, Vite, TailwindCSS
 
@@ -32,11 +37,11 @@ AI: OpenAI API (for smart recommendations)
 
 Animations: Framer Motion
 
-Deployment: Vercel
+### Deployment: Vercel
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Getting Started 🚀
+
+## Getting Started 🚀
 
 Prerequisites
 
@@ -46,11 +51,11 @@ npm / yarn
 
 Firebase account (for Firestore & Auth)
 
-OpenAI API key (optional, for AI features)
+### OpenAI API key (optional, for AI features)
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Installation
+
+## Installation
 
 1.Clone the Repository
     
@@ -81,9 +86,8 @@ Create a .env file in the root directory:
       # or
       yarn dev
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Project Structure 📂
+# Project Structure 📂
 
         src/  
         ├── components/       # Reusable UI components  
@@ -93,9 +97,9 @@ Project Structure 📂
         ├── App.jsx           # Root component  
         └── main.jsx          # Vite entry point  
         
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Deployment ☁️
+
+## Deployment ☁️
 
 Vercel (Recommended)
 
@@ -105,17 +109,17 @@ Import the repo into Vercel.
 
 Add the same .env variables in Vercel’s project settings.
 
-Deploy! 🚀
+### Deploy! 🚀
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-License 📜
+
+## License 📜
 
 MIT License - Free for personal and commercial use.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Support & Contact 📧
+## Support & Contact 📧
 
 For questions or feedback:
 

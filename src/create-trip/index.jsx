@@ -317,6 +317,7 @@ function CreateTrip() {
 
         {/* Disclaimer Dialog */}
         <Footer/>
+        {/* <br /> */}
 <Dialog 
   open={showDisclaimer} 
   onOpenChange={(open) => {

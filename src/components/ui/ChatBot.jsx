@@ -12,11 +12,13 @@ const ChatBot = () => {
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
 
+  // Use Gemini 1.5 Flash by default (free tier)
+  const [currentModel, setCurrentModel] = useState("gemini-1.5-flash-latest");
+
   useEffect(() => {
     localStorage.setItem('travel-chat', JSON.stringify(messages));
   }, [messages]);
 
-  
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -33,9 +35,11 @@ const ChatBot = () => {
     setError(null);
 
     try {
-      // Use the correct API endpoint and model name
+      // Add delay to avoid rate limits (critical for free tier)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -47,16 +51,30 @@ const ChatBot = () => {
               role: "user"
             }],
             generationConfig: {
-              temperature: 0.8,
-              maxOutputTokens: 2000
-            }
+              temperature: 0.7,  // Slightly less creative but more focused
+              maxOutputTokens: 500,  // Reduced for free tier optimization
+              topP: 0.9
+            },
+            safetySettings: [
+              {
+                category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                threshold: "BLOCK_ONLY_HIGH"
+              }
+            ]
           })
         }
       );
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error?.message || `HTTP error! status: ${response.status}`);
+        
+        // Model fallback strategy
+        if (errorData.error?.status === "RESOURCE_EXHAUSTED") {
+          setCurrentModel("gemini-1.0-pro-001"); // Fallback to legacy free model
+          throw new Error("Optimizing performance... Please try again.");
+        }
+        
+        throw new Error(errorData.error?.message || `API error: ${response.status}`);
       }
 
       const data = await response.json();
@@ -74,10 +92,13 @@ const ChatBot = () => {
     } catch (error) {
       console.error("API Error:", error);
       setError(error.message);
-      setMessages(prev => [...prev, { 
-        role: "model", 
-        content: "⚠️ I encountered an error. Please try again later." 
-      }]);
+      
+      if (!error.message.includes("Optimizing")) {
+        setMessages(prev => [...prev, { 
+          role: "model", 
+          content: "🚀 Upgrading my travel knowledge... Try your question again in a moment!" 
+        }]);
+      }
     } finally {
       setLoading(false);
     }
@@ -89,7 +110,6 @@ const ChatBot = () => {
       return `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`;
     }).join('\n\n') + '\n\nAssistant:';
   };
-
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
